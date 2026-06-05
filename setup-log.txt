@@ -1,0 +1,36 @@
+
+=== SETUP EQUIPOS VIALES 06/05/2026 11:16:28 ===
+
+[1/4] Creando repositorio GitHub...
+  OK  Repo ya existia
+
+[2/4] Git push a GitHub...
+  commit: Author identity unknown System.Management.Automation.RemoteException *** Please tell me who you are. System.Management.Automation.RemoteException Run System.Management.Automation.RemoteException   git config --global user.email "you@example.com"   git config --global user.name "Your Name" System.Management.Automation.RemoteException to set your account's default identity. Omit --global to set the identity only in this repository. System.Management.Automation.RemoteException fatal: unable to auto-detect email address (got 'Noxi-PC@DESKTOP-SG673N7.(none)')
+  push: error: src refspec main does not match any error: failed to push some refs to 'https://github.com/ricochet87/equipos-viales.git'
+  !!  Error en git push
+
+[3/4] Creando usuarios en Supabase Auth...
+  !!  zona1@vialidad.gob.ar: {"message":"Forbidden use of secret API key in browser","hint":"Secret API keys can only be used in a protected environment and should never be used in a browser. Delete this secret API key immediately!"}
+  !!  No se pudo recuperar zona1@vialidad.gob.ar
+  !!  zona2@vialidad.gob.ar: {"message":"Forbidden use of secret API key in browser","hint":"Secret API keys can only be used in a protected environment and should never be used in a browser. Delete this secret API key immediately!"}
+  !!  No se pudo recuperar zona2@vialidad.gob.ar
+  !!  zona3@vialidad.gob.ar: {"message":"Forbidden use of secret API key in browser","hint":"Secret API keys can only be used in a protected environment and should never be used in a browser. Delete this secret API key immediately!"}
+  !!  No se pudo recuperar zona3@vialidad.gob.ar
+  !!  zona4@vialidad.gob.ar: {"message":"Forbidden use of secret API key in browser","hint":"Secret API keys can only be used in a protected environment and should never be used in a browser. Delete this secret API key immediately!"}
+  !!  No se pudo recuperar zona4@vialidad.gob.ar
+  !!  zona5@vialidad.gob.ar: {"message":"Forbidden use of secret API key in browser","hint":"Secret API keys can only be used in a protected environment and should never be used in a browser. Delete this secret API key immediately!"}
+  !!  No se pudo recuperar zona5@vialidad.gob.ar
+  !!  admin@vialidad.gob.ar: {"message":"Forbidden use of secret API key in browser","hint":"Secret API keys can only be used in a protected environment and should never be used in a browser. Delete this secret API key immediately!"}
+  !!  No se pudo recuperar admin@vialidad.gob.ar
+
+[4/4] Insertando perfiles...
+
+=== RESULTADO ===
+  GitHub:   https://github.com/ricochet87/equipos-viales
+  Supabase: https://supabase.com/dashboard/project/rykghsljuayutgjtypgm
+  Usuarios creados: 0/6
+
+  FALTA: copiar la anon key de Supabase > Settings > API al .env.local
+  Log guardado en: C:\Users\Noxi-PC\Desktop\BD\04_Proyectos\01_Equipos_Viales\setup-log.txt
+
+[GIT] Git user config: OK
