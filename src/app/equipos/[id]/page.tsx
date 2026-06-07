@@ -39,7 +39,7 @@ export default async function DetalleEquipoPage({ params }: { params: { id: stri
   // Catálogos
   const [{ data: tipos }, { data: consorcios }, { data: categorias }, { data: auditoria }] = await Promise.all([
     supabase.from("tipos_equipo").select("*, categorias_equipo(nombre)").eq("activo", true).order("categoria_id").order("nombre"),
-    supabase.from("consorcios").select("id, numero, nombre, zona_id").order("zona_id").order("nombre"),
+    supabase.from("consorcios").select("id, numero, nombre, zona_id, km").order("zona_id").order("nombre"),
     supabase.from("categorias_equipo").select("*").order("id"),
     supabase.from("auditoria").select("*").eq("equipo_id", params.id).order("created_at", { ascending: false }).limit(50),
   ]);

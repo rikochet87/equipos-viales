@@ -26,7 +26,7 @@ export default async function NuevoEquipoPage() {
   // Cargar catálogos
   const [{ data: tipos }, { data: consorcios }, { data: categorias }] = await Promise.all([
     supabase.from("tipos_equipo").select("*, categorias_equipo(nombre)").eq("activo", true).order("categoria_id").order("nombre"),
-    supabase.from("consorcios").select("id, numero, nombre, zona_id").order("zona_id").order("nombre"),
+    supabase.from("consorcios").select("id, numero, nombre, zona_id, km").order("zona_id").order("nombre"),
     supabase.from("categorias_equipo").select("*").order("id"),
   ]);
 
