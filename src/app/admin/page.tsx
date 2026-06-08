@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import TablaEquipos from "@/components/TablaEquipos";
-import type { Perfil } from "@/lib/types";
+import type { Perfil, Consorcio } from "@/lib/types";
 
 export default async function AdminPage() {
   const supabase = createClient();
@@ -21,19 +21,27 @@ export default async function AdminPage() {
 
   if (!perfil || perfil.rol !== "admin") redirect("/");
 
-  // Cargar TODOS los equipos con joins
+  // Cargar TODOS los equipos con joins (incluye km del consorcio)
   const { data: equipos } = await supabase
     .from("equipos")
     .select(`
       *,
       tipos_equipo ( id, nombre, categoria_id, requiere_chasis_motor, categorias_equipo ( nombre ) ),
-      consorcios ( id, nombre, numero ),
+      consorcios ( id, nombre, numero, km, zona_id ),
       zonas ( id, nombre, sede )
     `)
     .order("zona_id")
     .order("created_at", { ascending: false });
 
+  // Lista completa de consorcios para el filtro
+  const { data: consorcios } = await supabase
+    .from("consorcios")
+    .select("id, nombre, numero, zona_id, km")
+    .order("zona_id")
+    .order("numero");
+
   const todos = equipos ?? [];
+  const listaConsorcios = (consorcios ?? []) as Consorcio[];
 
   // Métricas por zona
   const porZona = [1, 2, 3, 4, 5].map((z) => {
@@ -47,7 +55,6 @@ export default async function AdminPage() {
       dvp: zona.filter((e) => e.propietario === "DVP").length,
       consorcios: zona.filter((e) => e.propietario === "Consorcio").length,
       polizasVencidas: vencidas.length,
-      operativos: zona.filter((e) => e.condicion === "Operativo").length,
     };
   });
 
@@ -65,7 +72,6 @@ export default async function AdminPage() {
           <p className="text-sm text-gray-500 mt-1">Vista consolidada — {todos.length} equipos en 5 zonas</p>
         </div>
 
-        {/* Alertas globales */}
         {totalVencidas > 0 && (
           <div className="bg-red-50 border border-red-300 rounded-lg p-4 mb-6 flex items-center gap-3">
             <svg className="w-5 h-5 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -78,7 +84,6 @@ export default async function AdminPage() {
           </div>
         )}
 
-        {/* Cards resumen por zona */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
           {porZona.map((z) => (
             <div key={z.zona} className={`card text-center ${z.polizasVencidas > 0 ? "border-red-300" : ""}`}>
@@ -86,16 +91,17 @@ export default async function AdminPage() {
               <p className="text-2xl font-bold text-vialidad-azul">{z.total}</p>
               <p className="text-xs text-gray-500">{z.dvp} DVP · {z.consorcios} Consorcios</p>
               {z.polizasVencidas > 0 && (
-                <p className="text-xs font-semibold text-red-600 mt-1">⚠ {z.polizasVencidas} póliza{z.polizasVencidas > 1 ? "s" : ""} vencida{z.polizasVencidas > 1 ? "s" : ""}</p>
+                <p className="text-xs font-semibold text-red-600 mt-1">
+                  ⚠ {z.polizasVencidas} póliza{z.polizasVencidas > 1 ? "s" : ""} vencida{z.polizasVencidas > 1 ? "s" : ""}
+                </p>
               )}
             </div>
           ))}
         </div>
 
-        {/* Tabla consolidada */}
         <div className="card">
           <h2 className="text-base font-semibold text-gray-800 mb-4">Inventario completo</h2>
-          <TablaEquipos equipos={todos} modoAdmin={true} />
+          <TablaEquipos equipos={todos} consorcios={listaConsorcios} modoAdmin={true} />
         </div>
       </main>
     </div>
