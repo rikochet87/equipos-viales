@@ -51,7 +51,11 @@ export default async function HomePage() {
               {equipos?.length ?? 0} equipos registrados
             </p>
           </div>
-          <a href="/equipos/nuevo" className="btn-primary">
+          <a
+            href="/equipos/nuevo"
+            className="text-sm font-semibold rounded-md px-4 py-2 transition-opacity hover:opacity-80"
+            style={{ backgroundColor: "#FFE400", color: "#333333" }}
+          >
             + Nuevo equipo
           </a>
         </div>
@@ -93,12 +97,4 @@ function PolizasVencidas({ equipos }: { equipos: any[] }) {
           <ul className="mt-1 text-sm text-red-700 space-y-0.5">
             {vencidas.map((e) => (
               <li key={e.id}>
-                {e.tipos_equipo?.nombre} — {e.marca ?? ""} {e.modelo ?? ""} {e.dominio ? `(${e.dominio})` : ""}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
+                {e.tipos_equipo?.nombre} 

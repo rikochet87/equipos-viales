@@ -304,34 +304,36 @@ export default function TablaEquipos({ equipos, consorcios = [], modoAdmin = fal
                     </td>
                     <td className="px-3 py-3 text-right whitespace-nowrap">
                       <div className="flex items-center justify-end gap-3">
-                        <Link href={`/equipos/${equipo.id}`} className="text-vialidad-celeste hover:underline text-xs">
+                        <Link
+                          href={`/equipos/${equipo.id}`}
+                          className="text-xs font-semibold rounded px-2 py-0.5 transition-opacity hover:opacity-80"
+                          style={{ backgroundColor: "#FFE400", color: "#333333" }}
+                        >
                           Ver / Editar
                         </Link>
-                        {modoAdmin && (
-                          confirmarId === equipo.id ? (
-                            <span className="flex items-center gap-1">
-                              <button
-                                onClick={() => eliminarEquipo(equipo.id)}
-                                disabled={estaEliminando}
-                                className="text-xs text-white bg-red-600 hover:bg-red-700 px-2 py-0.5 rounded disabled:opacity-50"
-                              >
-                                {estaEliminando ? "..." : "Confirmar"}
-                              </button>
-                              <button
-                                onClick={() => setConfirmarId(null)}
-                                className="text-xs text-gray-500 hover:text-gray-700"
-                              >
-                                Cancelar
-                              </button>
-                            </span>
-                          ) : (
+                        {confirmarId === equipo.id ? (
+                          <span className="flex items-center gap-1">
                             <button
-                              onClick={() => setConfirmarId(equipo.id)}
-                              className="text-xs text-red-400 hover:text-red-600"
+                              onClick={() => eliminarEquipo(equipo.id)}
+                              disabled={estaEliminando}
+                              className="text-xs text-white bg-red-600 hover:bg-red-700 px-2 py-0.5 rounded disabled:opacity-50"
                             >
-                              Eliminar
+                              {estaEliminando ? "..." : "Confirmar"}
                             </button>
-                          )
+                            <button
+                              onClick={() => setConfirmarId(null)}
+                              className="text-xs text-gray-500 hover:text-gray-700"
+                            >
+                              Cancelar
+                            </button>
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => setConfirmarId(equipo.id)}
+                            className="text-xs text-red-400 hover:text-red-600"
+                          >
+                            Eliminar
+                          </button>
                         )}
                       </div>
                     </td>
