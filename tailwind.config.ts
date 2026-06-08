@@ -12,10 +12,12 @@ const config: Config = {
         vialidad: {
           azul: "#1e3a5f",
           celeste: "#2980b9",
-          amarillo: "#f39c12",
+          amarillo: "#FFE400",
+          naranja: "#f39c12",
           verde: "#27ae60",
           rojo: "#e74c3c",
           gris: "#ecf0f1",
+          oscuro: "#333333",
         },
       },
     },
