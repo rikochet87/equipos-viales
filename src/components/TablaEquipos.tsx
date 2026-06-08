@@ -133,8 +133,9 @@ export default function TablaEquipos({ equipos, consorcios = [], modoAdmin = fal
       const { error } = await supabase.from("equipos").delete().eq("id", id);
       if (error) throw error;
       setListaEquipos((prev) => prev.filter((e) => e.id !== id));
-    } catch {
-      alert("No se pudo eliminar el equipo.");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : JSON.stringify(err);
+      alert("Error al eliminar: " + msg);
     } finally {
       setEliminandoId(null);
       setConfirmarId(null);
