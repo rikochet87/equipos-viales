@@ -32,7 +32,7 @@ export default function FormularioEquipo({ tipos, consorcios, zonaId, perfil, eq
     anio: equipoInicial?.anio ?? "",
     n_chasis: equipoInicial?.n_chasis ?? "",
     n_motor: equipoInicial?.n_motor ?? "",
-    condicion: equipoInicial?.condicion ?? "Operativo",
+    condicion: equipoInicial?.condicion ?? "Bueno",
     en_servicio: equipoInicial?.en_servicio ?? true,
     poliza_numero: equipoInicial?.poliza_numero ?? "",
     poliza_vencimiento: equipoInicial?.poliza_vencimiento ?? "",
@@ -256,10 +256,16 @@ export default function FormularioEquipo({ tipos, consorcios, zonaId, perfil, eq
           onChange={(e) => setField("condicion", e.target.value)}
           required
         >
-          <option value="Operativo">Operativo</option>
-          <option value="En reparación">En reparación</option>
-          <option value="Fuera de servicio">Fuera de servicio</option>
-          <option value="Para baja">Para baja</option>
+          <optgroup label="── Operativo">
+            <option value="Bueno">Bueno</option>
+            <option value="Regular">Regular</option>
+            <option value="Malo">Malo</option>
+          </optgroup>
+          <optgroup label="── No operativo">
+            <option value="En reparación">En reparación</option>
+            <option value="Desuso">Desuso</option>
+            <option value="Baja">Baja</option>
+          </optgroup>
         </select>
       </div>
 

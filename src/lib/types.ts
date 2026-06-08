@@ -30,7 +30,7 @@ export type TipoEquipo = {
   categorias_equipo?: CategoriaEquipo;
 };
 
-export type Condicion = "Operativo" | "En reparación" | "Fuera de servicio" | "Para baja";
+export type Condicion = "Bueno" | "Regular" | "Malo" | "En reparación" | "Desuso" | "Baja";
 export type Propietario = "DVP" | "Consorcio";
 
 export type Equipo = {

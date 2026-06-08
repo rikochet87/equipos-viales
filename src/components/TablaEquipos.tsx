@@ -203,10 +203,16 @@ export default function TablaEquipos({ equipos, consorcios = [], modoAdmin = fal
           className="input-field w-auto"
         >
           <option value="">Todas las condiciones</option>
-          <option value="Operativo">Operativo</option>
-          <option value="En reparación">En reparación</option>
-          <option value="Fuera de servicio">Fuera de servicio</option>
-          <option value="Para baja">Para baja</option>
+          <optgroup label="── Operativo">
+            <option value="Bueno">Bueno</option>
+            <option value="Regular">Regular</option>
+            <option value="Malo">Malo</option>
+          </optgroup>
+          <optgroup label="── No operativo">
+            <option value="En reparación">En reparación</option>
+            <option value="Desuso">Desuso</option>
+            <option value="Baja">Baja</option>
+          </optgroup>
         </select>
 
         <div className="flex gap-2">
