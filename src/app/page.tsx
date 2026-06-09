@@ -31,7 +31,7 @@ export default async function HomePage() {
     .select(`
       *,
       tipos_equipo ( id, nombre, categoria_id, requiere_chasis_motor, categorias_equipo ( nombre ) ),
-      consorcios ( id, nombre, numero )
+      consorcios ( id, nombre, numero, km )
     `)
     .eq("zona_id", perfil.zona_id!)
     .order("created_at", { ascending: false });
