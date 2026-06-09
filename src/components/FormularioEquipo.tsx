@@ -15,10 +15,23 @@ interface Props {
   equipoInicial?: any;
 }
 
-export default function FormularioEquipo({ tipos, consorcios, zonaId, perfil, equipoInicial }: Props) {
+export default function FormularioEquipo({ tipos, consorcios, categorias, zonaId, perfil, equipoInicial }: Props) {
   const router = useRouter();
   const supabase = createClient();
   const modoEdicion = !!equipoInicial;
+
+  // Categoría para filtrar tipos (en edición la derivamos del tipo actual)
+  const [categoriaSel, setCategoriaSel] = useState<number | "">(() => {
+    if (equipoInicial?.tipo_id) {
+      const tipo = tipos.find((t) => t.id === Number(equipoInicial.tipo_id));
+      return tipo?.categoria_id ?? "";
+    }
+    return "";
+  });
+
+  const tiposFiltrados = categoriaSel
+    ? tipos.filter((t) => t.categoria_id === Number(categoriaSel))
+    : tipos;
 
   const [form, setForm] = useState({
     zona_id: equipoInicial?.zona_id ?? zonaId ?? 1,
@@ -180,22 +193,40 @@ export default function FormularioEquipo({ tipos, consorcios, zonaId, perfil, eq
         </div>
       )}
 
-      {/* Tipo de equipo */}
-      <div>
-        <label className="label-field">Tipo de equipo *</label>
-        <select
-          className="input-field"
-          value={form.tipo_id}
-          onChange={(e) => setField("tipo_id", e.target.value)}
-          required
-        >
-          <option value="">— Seleccionar tipo —</option>
-          {tipos.map((t) => (
-            <option key={t.id} value={t.id}>
-              {t.nombre}
-            </option>
-          ))}
-        </select>
+      {/* Categoría → Tipo de equipo */}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="label-field">Categoría *</label>
+          <select
+            className="input-field"
+            value={categoriaSel}
+            onChange={(e) => {
+              setCategoriaSel(Number(e.target.value) || "");
+              setField("tipo_id", "");
+            }}
+            required
+          >
+            <option value="">— Seleccionar categoría —</option>
+            {categorias.map((c) => (
+              <option key={c.id} value={c.id}>{c.nombre}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="label-field">Tipo de equipo *</label>
+          <select
+            className="input-field"
+            value={form.tipo_id}
+            onChange={(e) => setField("tipo_id", e.target.value)}
+            required
+            disabled={!categoriaSel}
+          >
+            <option value="">{categoriaSel ? "— Seleccionar tipo —" : "— Primero elegí categoría —"}</option>
+            {tiposFiltrados.map((t) => (
+              <option key={t.id} value={t.id}>{t.nombre}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Marca / Modelo / Año */}

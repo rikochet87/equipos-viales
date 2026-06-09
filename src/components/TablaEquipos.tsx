@@ -21,6 +21,7 @@ export default function TablaEquipos({ equipos, consorcios = [], modoAdmin = fal
   const [filtroConsorcio, setFiltroConsorcio] = useState("");
   const [filtroPropietario, setFiltroPropietario] = useState<"" | "DVP" | "Consorcio">("");
   const [filtroCondicion, setFiltroCondicion] = useState("");
+  const [filtroCategoria, setFiltroCategoria] = useState("");
   const [eliminandoId, setEliminandoId] = useState<string | null>(null);
   const [confirmarId, setConfirmarId] = useState<string | null>(null);
   const [listaEquipos, setListaEquipos] = useState<Equipo[]>(equipos);
@@ -43,8 +44,14 @@ export default function TablaEquipos({ equipos, consorcios = [], modoAdmin = fal
     if (filtroConsorcio && e.consorcio_id !== Number(filtroConsorcio)) return false;
     if (filtroPropietario && e.propietario !== filtroPropietario) return false;
     if (filtroCondicion && e.condicion !== filtroCondicion) return false;
+    if (filtroCategoria && (e as any).tipos_equipo?.categorias_equipo?.nombre !== filtroCategoria) return false;
     return true;
   });
+
+  // Categorías únicas presentes en los equipos cargados
+  const categoriasDisponibles = Array.from(
+    new Set(listaEquipos.map((e) => (e as any).tipos_equipo?.categorias_equipo?.nombre).filter(Boolean))
+  ) as string[];
 
   // ── Helpers de exportación ──────────────────────────────────────
   function buildEncabezados(): string[] {
@@ -195,6 +202,17 @@ export default function TablaEquipos({ equipos, consorcios = [], modoAdmin = fal
           <option value="">Todos los propietarios</option>
           <option value="DVP">DVP</option>
           <option value="Consorcio">Consorcio</option>
+        </select>
+
+        <select
+          value={filtroCategoria}
+          onChange={(e) => setFiltroCategoria(e.target.value)}
+          className="input-field w-auto"
+        >
+          <option value="">Todas las categorías</option>
+          {categoriasDisponibles.map((cat) => (
+            <option key={cat} value={cat}>{cat}</option>
+          ))}
         </select>
 
         <select
