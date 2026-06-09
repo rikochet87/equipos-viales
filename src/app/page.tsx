@@ -97,4 +97,13 @@ function PolizasVencidas({ equipos }: { equipos: any[] }) {
           <ul className="mt-1 text-sm text-red-700 space-y-0.5">
             {vencidas.map((e) => (
               <li key={e.id}>
-                {e.tipos_equipo?.nombre} 
+                {e.tipos_equipo?.nombre}{e.marca ? ` ${e.marca}` : ""}{e.modelo ? ` ${e.modelo}` : ""} — vence{" "}
+                {new Date(e.poliza_vencimiento + "T00:00:00").toLocaleDateString("es-AR")}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
